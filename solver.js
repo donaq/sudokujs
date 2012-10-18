@@ -246,8 +246,10 @@ function solve(arr){
     var change = true, bt, res, changes;
     var nines = makenines(arr);
     makepossibles(arr);
-    //run till steady state
-    while(change){
+    var count = 0;
+    //run till steady state or till count reaches 100. This will happen for invalid grids
+    while(change && count<100){
+        count++;
         change = false;
         res = eliminate(arr);
         changes = res[1];
