@@ -205,9 +205,12 @@ function reversechanges(arr, changes){
     makepossibles(arr);
 }
 
-function backtracker(arr){
+function backtracker(arr, timelimit){
+    var d = new Date();
+    if(d.getTime()>=timelimit)
+        return [false,[]];
     var i, j, k, val, changes=[], eli, bt;
-    var elem = null, min=9;
+    var elem = null, min=10;
     // find a square with least possibilities
     for(i=0;i<9;i++){
         for(j=0;j<9;j++){
@@ -233,7 +236,7 @@ function backtracker(arr){
         }
         if(is_solved(arr))
             return [true, changes];
-        bt = backtracker(arr);
+        bt = backtracker(arr, timelimit);
         changes = changes.concat(bt[1]);
         if(bt[0])
             return [bt[0], changes];
@@ -245,20 +248,24 @@ function backtracker(arr){
 function solve(arr){
     var change = true, bt, res, changes;
     var nines = makenines(arr);
+    var d = new Date();
+    var timelimit = d.getTime()+1000;
     makepossibles(arr);
-    var count = 0;
-    //run till steady state or till count reaches 100. This will happen for invalid grids
-    while(change && count<100){
-        count++;
+    //run till steady state or till time limit is reached
+    while(change && d.getTime()<timelimit){
         change = false;
         res = eliminate(arr);
         changes = res[1];
         if(changes.length>0) change = true;
         if(change) continue;
-        bt = backtracker(arr);
+        bt = backtracker(arr, timelimit);
         if(!bt[0]){
             change = true;
             makepossibles(arr);
         }
+        d = new Date();
+    }
+    if(!is_solved(arr)){
+        alert("Puzzle appears to be unsolvable.");
     }
 }
