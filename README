@@ -1,4 +1,4 @@
-So I decided to write a Sudoku solver in pure Javascript for fun. A demo is running at http://sudoku.softwaredjinn.com
+So I decided to write a Sudoku solver in pure Javascript for fun. A demo is ~~running~~ no longer running at http://sudoku.softwaredjinn.com because I bollocksed up my linode instance.
 
 Dependencies: None
 
